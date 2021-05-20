@@ -1,5 +1,5 @@
 from game.console import Console
-from game.player import Player
+from game.word import Word
 from game.jumper import Jumper
 from game.word import Word
 
@@ -13,7 +13,7 @@ class Director:
     Attributes:
         console (Console): An instance of the class of objects known as Console.
         keep_playing (boolean): Whether or not the game can continue.
-        player (Player): An instance of the class of objects known as Player.
+        word (Word): An instance of the class of objects known as Player.
         jumper (Jumper): An instance of the class of objects known as Jumper.
     """
     
@@ -24,7 +24,7 @@ class Director:
             self (Director): an instance of Director.
         """
         self.console = Console()
-        self.player = Player()
+        self.word = Word()
         self.keep_playing = True
         self.jumper = Jumper()
         self.word = Word()
@@ -33,6 +33,9 @@ class Director:
 
     def split_word(self):
         """Gets a word form word and splits it into a list
+        
+    def start_game(self):
+        """Starts the game loop to control the sequence of play.
         
         Args:
             self (Director): an instance of Director.
@@ -60,3 +63,42 @@ class Director:
         for thing in self.placeholder:
             word = word + " " + thing
         print(word)
+        while self.keep_playing:
+            self.get_inputs() # First display the prompt and get the inputs.
+                                # via Console class
+            self.do_updates() #
+            self.do_outputs()
+
+    def get_inputs(self):
+        """Gets the inputs at the beginning of each round of play. In this case,
+        that means getting a letter from the User in the Jumper class via the 
+        console class.
+
+        Args:
+            self (Director): An instance of Director.
+        """
+        message = self.hunter.get_message()
+        self.console.write(message)
+        location = self.console.read_number("Enter a location [1-1000]: ") # User input here.
+        self.hunter.move(location) # This is the new location of the hunter.
+        
+    def do_updates(self):
+        """Updates the important game information for each round of play. In 
+        this case, the .
+
+        Args:
+            self (Director): An instance of Director.
+        """
+        self.rabbit.watch(self.hunter.location) # The location of the hunter is sent to the 
+            # rabbit watch method.
+        
+    def do_outputs(self):
+        """Outputs the important game information for each round of play. In 
+        this case, that means the rabbit provides a hint.
+
+        Args:
+            self (Director): An instance of Director.
+        """
+        hint = self.rabbit.get_hint()
+        self.console.write(hint)
+        self.keep_playing = (self.rabbit.distance[-1] != 0)

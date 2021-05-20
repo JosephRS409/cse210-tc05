@@ -18,6 +18,7 @@ class Word:
         Args:
             self (Word): An instance of Word.
         """
+        pass
 
     def get_word(self):
         """Chooses a word for the game

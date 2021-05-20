@@ -8,14 +8,14 @@ class Console:
         Service Provider, Interfacer
 
     Attributes:
-        prompt (string): The prompt to display on each line.
+         N/A
     """
     def __init__(self):
         self.prompt = ""
         self.mode = "normal"
         self.parachute = []
      
-    def read(self, prompt):
+    def read(self, prompt): #prompt (string): The prompt to display on each line.
         """Gets text input from the user through the screen.
 
         Args: 
@@ -36,7 +36,7 @@ class Console:
 
         Returns:
             float: The user's input as a float.
-        """
+        """ # Changes the user's input from a letter to a number.
         return float(input(prompt))
         
     def write(self, text):
