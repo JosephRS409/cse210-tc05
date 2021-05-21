@@ -29,7 +29,7 @@ class Word:
             word (str) -- Word for the game
 
         """
-        df = pd.read_csv("wordbank.csv") # the dataframe 
+        df = pd.read_csv("game/wordbank.csv") # the dataframe 
         column = df["category"] 
         unique = column.unique() # 4 catagories
         options = unique.tolist() 

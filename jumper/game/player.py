@@ -16,3 +16,6 @@ class Player:
         Args:
             self (Player): An instance of Player.
         """
+        self.guess = ""
+    def guess_letter(self):
+        self.guess = input("Enter your guess: ")

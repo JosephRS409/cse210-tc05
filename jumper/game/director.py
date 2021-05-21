@@ -1,4 +1,3 @@
-from game.console import Console
 from game.player import Player
 from game.jumper import Jumper
 from game.word import Word
@@ -23,13 +22,13 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
-        self.console = Console()
         self.player = Player()
         self.keep_playing = True
         self.jumper = Jumper()
         self.word = Word()
         self.letters = []
         self.placeholder = []
+        self.other_letters = []
 
     def split_word(self):
         """Gets a word form word and splits it into a list
@@ -40,23 +39,48 @@ class Director:
         word = self.word.get_word()
         for letter in word:
             self.letters.append(letter)
+            self.other_letters.append(letter)
             self.placeholder.append("_")
 
     def update_guesses(self):
         """Updaates the gueses and parachute"""
-        # Side note I don't think we need a console and a player class,
-        #  and i'm not sure which we'll keep so for now i'll pretend we're gonna use console to get user input
-        if self.console.guess in self.letters:
-            iterations = self.letters.count(self.console.guess)
+        if self.player.guess in self.letters:
+            iterations = self.letters.count(self.player.guess)
             for _ in range(0, iterations):
-                list_index  = self.letters.index(self.consoke.guess)
+                list_index  = self.letters.index(self.player.guess)
                 self.placeholder.pop(list_index)
-                self.placeholder.insert(list_index, self.console.guess)
+                self.placeholder.insert(list_index, self.player.guess)
                 self.letters.pop(list_index)
                 self.letters.insert(list_index, "")
 
     def display_word(self):
+        """Displays amount of letters in the word as _ for the player to guess"""
         word = ""
         for thing in self.placeholder:
             word = word + " " + thing
         print(word)
+
+    def able_to_play(self):
+        if self.other_letters == self.placeholder:
+            print("Congratulations! you Win!")
+            return False
+        else:
+            play = input("keep playing? ")
+            if play == "n":
+                return False
+            elif play == "y":
+                return True
+
+    def start_game(self):
+        """Plays the Game"""
+        self.split_word()
+        self.jumper.set_gamemode()
+        self.jumper.set_jumper()
+        while self.keep_playing == True:
+            self.display_word()
+            self.jumper.display_jumper()
+            self.player.guess_letter()
+            self.update_guesses()
+            print(self.letters)
+            self.display_word()
+            self.keep_playing = self.able_to_play()
