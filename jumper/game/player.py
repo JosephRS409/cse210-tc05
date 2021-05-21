@@ -22,4 +22,5 @@ class Player:
     def guess_letter(self):
         """Gets the letter guess form the player"""
         self.guess = input("Enter your guess or Quit to quit: ")
+        #Gets the letter guess form the player.
     
