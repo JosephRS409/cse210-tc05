@@ -66,9 +66,9 @@ class Director:
             return False
         else:
             play = input("keep playing? ")
-            if play == "n":
+            if play.lower() == "n" or play.lower() == "no":
                 return False
-            elif play == "y":
+            elif play.lower() == "y" or play.lower() == "yes":
                 return True
 
     def start_game(self):
@@ -81,6 +81,5 @@ class Director:
             self.jumper.display_jumper()
             self.player.guess_letter()
             self.update_guesses()
-            print(self.letters)
             self.display_word()
             self.keep_playing = self.able_to_play()
