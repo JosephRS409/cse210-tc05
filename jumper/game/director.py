@@ -34,8 +34,8 @@ class Director:
     def split_word(self):
         """Gets a word form word and splits it into a list
         
-    def start_game(self):
-        """Starts the game loop to control the sequence of play.
+    #def start_game(self):
+        #Starts the game loop to control the sequence of play.
         
         Args:
             self (Director): an instance of Director.
@@ -46,13 +46,13 @@ class Director:
             self.placeholder.append("_")
 
     def update_guesses(self):
-        """Updaates the gueses and parachute"""
+        """Updates the guesses and parachute"""
         # Side note I don't think we need a console and a player class,
         #  and i'm not sure which we'll keep so for now i'll pretend we're gonna use console to get user input
         if self.console.guess in self.letters:
             iterations = self.letters.count(self.console.guess)
             for _ in range(0, iterations):
-                list_index  = self.letters.index(self.consoke.guess)
+                list_index  = self.letters.index(self.console.guess)
                 self.placeholder.pop(list_index)
                 self.placeholder.insert(list_index, self.console.guess)
                 self.letters.pop(list_index)
@@ -102,3 +102,29 @@ class Director:
         hint = self.rabbit.get_hint()
         self.console.write(hint)
         self.keep_playing = (self.rabbit.distance[-1] != 0)
+        """
+        def set_gamemode(self):
+        choice = input("Which gamemode would you like to play on? Easy or Normal? E/N: ")
+
+        if choice.lower() == "n":
+            self.mode = "normal"
+        elif choice.lower() == "e":
+            self.mode = "easy"
+
+    def set_jumper(self):
+        """Sets the parachute based on the game difficulty
+        
+        Args: 
+            self (Screen): An instance of Screen.
+        """
+        if self.mode == "normal":
+            self.parachute = ["___","/___\\","\\   /","\\ /","0"]
+        elif self.mode == "easy":
+            self.parachute = ["___","/___\\","\\","/","\\","/","0"]
+
+    def display_jumper(self):
+        if len(self.parachute) == 7:
+            print(f" {self.parachute[0]}\n{self.parachute[1]}\n{self.parachute[2]}   {self.parachute[3]}\n {self.parachute[4]} {self.parachute[5]}\n  {self.parachute[6]}\n /|\\\n / \\")
+        elif len(self.parachute) == 5:
+            print(f" {self.parachute[0]}\n{self.parachute[1]}\n{self.parachute[2]}\n {self.parachute[3]}\n  {self.parachute[4]}\n /|\\\n / \\")
+
