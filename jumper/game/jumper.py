@@ -18,6 +18,7 @@ class Jumper:
         self.parachute = []
 
     def set_gamemode(self):
+        """Choses the difficulty of the game"""
         choice = input(
             "Which gamemode would you like to play on? Easy or Normal? E/N: ")
 
@@ -38,6 +39,7 @@ class Jumper:
             self.parachute = ["___", "/___\\", "\\", "/", "\\", "/", "0"]
 
     def display_jumper(self):
+        """Displays the parachute to the player"""
         if len(self.parachute) == 7:
             print(
                 f" {self.parachute[0]}\n{self.parachute[1]}\n{self.parachute[2]}   {self.parachute[3]}\n {self.parachute[4]} {self.parachute[5]}\n  {self.parachute[6]}\n /|\\\n / \\")

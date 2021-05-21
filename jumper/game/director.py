@@ -29,6 +29,9 @@ class Director:
         self.letters = []
         self.placeholder = []
         self.other_letters = []
+        self.i = 0
+        self.guesses = []
+        self.game_word = ""
 
     def split_word(self):
         """Gets a word form word and splits it into a list
@@ -37,14 +40,18 @@ class Director:
             self (Director): an instance of Director.
         """
         word = self.word.get_word()
+        self.game_word = word
         for letter in word:
             self.letters.append(letter)
             self.other_letters.append(letter)
             self.placeholder.append("_")
 
     def update_guesses(self):
-        """Updaates the gueses and parachute"""
-        if self.player.guess in self.letters:
+        """Updates the gueses and parachute"""
+
+        if self.player.guess in self.guesses:
+            pass
+        elif self.player.guess in self.letters:
             iterations = self.letters.count(self.player.guess)
             for _ in range(0, iterations):
                 list_index  = self.letters.index(self.player.guess)
@@ -53,26 +60,37 @@ class Director:
                 self.letters.pop(list_index)
                 self.letters.insert(list_index, "")
 
+        elif self.player.guess.isalpha() and len(self.player.guess) == 1:
+            self.guesses.append(self.player.guess)
+            self.jumper.parachute[self.i] = " "
+            self.i +=1
+
     def display_word(self):
         """Displays amount of letters in the word as _ for the player to guess"""
+
         word = ""
         for thing in self.placeholder:
             word = word + " " + thing
         print(word)
 
     def able_to_play(self):
+        """Check to see if the player wins/can continue to play"""
         if self.other_letters == self.placeholder:
             print("Congratulations! you Win!")
             return False
+        elif self.player.guess.lower() == "quit":
+            return False
+        elif self.i == len(self.jumper.parachute):
+            self.jumper.display_jumper()
+            print(f"the word was {self.game_word}")
+            print("you suck")
+            return False
         else:
-            play = input("keep playing? ")
-            if play.lower() == "n" or play.lower() == "no":
-                return False
-            elif play.lower() == "y" or play.lower() == "yes":
-                return True
+            return True
 
     def start_game(self):
         """Plays the Game"""
+        
         self.split_word()
         self.jumper.set_gamemode()
         self.jumper.set_jumper()
@@ -81,5 +99,4 @@ class Director:
             self.jumper.display_jumper()
             self.player.guess_letter()
             self.update_guesses()
-            self.display_word()
             self.keep_playing = self.able_to_play()

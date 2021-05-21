@@ -17,5 +17,9 @@ class Player:
             self (Player): An instance of Player.
         """
         self.guess = ""
+        
+        
     def guess_letter(self):
-        self.guess = input("Enter your guess: ")
+        """Gets the letter guess form the player"""
+        self.guess = input("Enter your guess or Quit to quit: ")
+    
