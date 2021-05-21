@@ -85,10 +85,11 @@ class Director:
         elif self.player.guess.isalpha() and len(self.player.guess) == 1:
             # If guess is incorrect but valid (isalpha makes sure it is a letter and
                       # len(self.player.guess) == 1 makes sure only one letter is guessed)
-            self.guesses.append(self.player.guess) # Updates the guesses list.
-            self.jumper.parachute[self.i] = " " # Replaces part of the parachute with a
-                                                # blank.
-            self.i +=1 # This is a counter for incorrect guesses.
+            self.guesses.append(self.player.guess) # Adds the letter to the 
+                # list of already guessed letters.
+            self.jumper.parachute[self.i] = " " # Replaces the next part of the parachute 
+                                                     # with a  blank
+            self.i +=1 # This adds 1 to a counter for incorrect guesses
 
     def display_word(self):
         """Displays amount of letters in the word as _ for the player to guess
@@ -97,8 +98,9 @@ class Director:
             self (Director): an instance of Director.
         """
 
+        # Make the placeholder list look pretty and display for user.
         word = ""
-        for thing in self.placeholder:
+        for thing in self.placeholder: # Displays the word with a space between each letter
             word = word + " " + thing
         print(word)
 
@@ -109,15 +111,16 @@ class Director:
             self (Director): an instance of Director.
         """
 
-        if self.other_letters == self.placeholder:
+        if self.other_letters == self.placeholder: # Checks to see if the player has guessed all letters in the word.
             print("Congratulations! you Win!")
             return False
-        elif self.player.guess.lower() == "quit":
+        elif self.player.guess.lower() == "quit": # Checks to see if the player wants to quit.
             return False
-        elif self.i == len(self.jumper.parachute):
+        elif self.i == len(self.jumper.parachute): # Checks to see if the player has lost.
             self.jumper.display_jumper()
             print(f"the word was {self.game_word}")
-            print("you suck")
+            print("you suck") # This needs no explanation.
+                # "If it does, it applies to you." -- Joseph
             return False
         else:
             return True
@@ -129,12 +132,12 @@ class Director:
             self (Director): an instance of Director.
         """
         
-        self.split_word()
-        self.jumper.set_gamemode()
-        self.jumper.set_jumper()
+        self.split_word() # Splits the word into a list.
+        self.jumper.set_gamemode() # Sets the gamemode.
+        self.jumper.set_jumper() # Sets the jumper depending on difficulty.
         while self.keep_playing == True:
-            self.display_word()
-            self.jumper.display_jumper()
-            self.player.guess_letter() # Has player guess a Lettre
-            self.update_guesses() # Updates the lists with the guesses
-            self.keep_playing = self.able_to_play() #CHecks to see if you can keep playing
+            self.display_word() # Displays the word.
+            self.jumper.display_jumper() # Displays the jumper.
+            self.player.guess_letter() # Has player guess a letter.
+            self.update_guesses() # Updates the lists with the guesses.
+            self.keep_playing = self.able_to_play() #Checks to see if you can keep playing.
