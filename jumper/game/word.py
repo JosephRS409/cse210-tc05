@@ -29,14 +29,14 @@ class Word:
             word (str) -- Word for the game
 
         """
-        df = pd.read_csv("game/wordbank.csv") # the dataframe 
+        df = pd.read_csv("jumper/game/wordbank.csv") # the dataframe 
         column = df["category"] 
         unique = column.unique() # 4 catagories
         options = unique.tolist() 
 
         valid = False ## This is the user picking a category.
         while not valid:
-            print("Please choose a category:")
+            print("Pick a word difficulty:")
             for option in options:
                 print(option.title())
             category = input("\n>")
